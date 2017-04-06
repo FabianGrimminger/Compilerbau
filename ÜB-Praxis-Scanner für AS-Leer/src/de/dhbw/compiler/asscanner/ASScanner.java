@@ -24,7 +24,7 @@ public class ASScanner {
 	public Token nextToken() throws Exception {
 		
 		//TODO implement Scanner here ...
-		
+		//GEHT DAS JETZT SO WIE ICH IWLL????
 		return new Token(Token.INVALID, "");
 	}
 
