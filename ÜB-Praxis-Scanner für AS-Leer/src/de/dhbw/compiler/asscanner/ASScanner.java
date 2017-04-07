@@ -53,6 +53,14 @@ public class ASScanner {
 					s="";
 					zustand = 0;
 					break;
+				case '\n':
+					s="";
+					zustand = 0;
+					break;
+				case '\r':
+					s="";
+					zustand = 0;
+					break;
 				default: //hier zahlen und buchstaben abfangen, da anders in switch-case nicht möglich
 					if(i>=48 && i<=57){ //zahlen in ASCII
 						//s+=c;
@@ -86,6 +94,14 @@ public class ASScanner {
 					zustand = 5;
 					break;
 				case ' ':
+					s="";
+					zustand = 0;
+					break;
+				case '\n':
+					s="";
+					zustand = 0;
+					break;
+				case '\r':
 					s="";
 					zustand = 0;
 					break;
@@ -124,6 +140,14 @@ public class ASScanner {
 					s="";
 					zustand = 0;
 					break;
+				case '\n':
+					s="";
+					zustand = 0;
+					break;
+				case '\r':
+					s="";
+					zustand = 0;
+					break;
 				default: //hier zahlen und buchstaben abfangen, da anders in switch-case nicht möglich
 					if(i>=48 && i<=57){ //zahlen in ASCII
 						zustand = 4;
@@ -156,6 +180,14 @@ public class ASScanner {
 					zustand = 5;
 					break;
 				case ' ':
+					s="";
+					zustand = 0;
+					break;
+				case '\n':
+					s="";
+					zustand = 0;
+					break;
+				case '\r':
 					s="";
 					zustand = 0;
 					break;
@@ -197,6 +229,16 @@ public class ASScanner {
 					s="";
 					zustand = 0;
 					return token;
+				case '\n':
+					token = new Token(Token.NUM,s);
+					s="";
+					zustand = 0;
+					return token;
+				case '\r':
+					token = new Token(Token.NUM,s);
+					s="";
+					zustand = 0;
+					return token;
 				default:
 					if(i>=48 && i<=57){
 						zustand = 4;
@@ -232,6 +274,16 @@ public class ASScanner {
 					zustand = 3;
 					return token;
 				case ' ':
+					token = new Token(Token.ID,s);
+					s="";
+					zustand = 0;
+					return token;
+				case '\n':
+					token = new Token(Token.ID,s);
+					s="";
+					zustand = 0;
+					return token;
+				case '\r':
 					token = new Token(Token.ID,s);
 					s="";
 					zustand = 0;
@@ -279,6 +331,16 @@ public class ASScanner {
 					s="";
 					zustand = 0;
 					return token;
+				case '\n':
+					token = new Token(Token.ID,s);
+					s="";
+					zustand = 0;
+					return token;
+				case '\r':
+					token = new Token(Token.ID,s);
+					s="";
+					zustand = 0;
+					return token;
 				default:
 					if(i>=48 && i<=57){
 						s+=c;
@@ -314,6 +376,16 @@ public class ASScanner {
 					zustand = 3;
 					return token;
 				case ' ':
+					token = new Token(Token.ID,s);
+					s="";
+					zustand = 0;
+					return token;
+				case '\n':
+					token = new Token(Token.ID,s);
+					s="";
+					zustand = 0;
+					return token;
+				case '\r':
 					token = new Token(Token.ID,s);
 					s="";
 					zustand = 0;
@@ -357,6 +429,16 @@ public class ASScanner {
 					zustand = 3;
 					return token;
 				case ' ':
+					token = new Token(Token.ID,s);
+					s="";
+					zustand = 0;
+					return token;
+				case '\n':
+					token = new Token(Token.ID,s);
+					s="";
+					zustand = 0;
+					return token;
+				case '\r':
 					token = new Token(Token.ID,s);
 					s="";
 					zustand = 0;
