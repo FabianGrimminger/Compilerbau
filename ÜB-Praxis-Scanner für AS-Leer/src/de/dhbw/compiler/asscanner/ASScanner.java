@@ -25,13 +25,9 @@ public class ASScanner {
 	public Token nextToken() throws Exception {
 		
 		//TODO implement Scanner here ...
-		
-		
-		int i = in.read();
-		char c = (char) i;
-		
-		while(zustand!=-1){		
-			
+		while(zustand!=-10){		
+			int i = in.read();
+			char c = (char) i;
 			Token token = null;
 			switch(zustand){
 			case 0: //startzustand und whitespace
@@ -65,6 +61,8 @@ public class ASScanner {
 					else if((i>=65 && i<=90) /*GROß*/ || (i>=97 && i<=122) /*klein*/){
 						//s+=c;
 						zustand = 6;
+					}else if(i==-1){
+						return new Token(Token.EOF,"");
 					}else{
 						zustand = -10;
 					}
@@ -96,8 +94,9 @@ public class ASScanner {
 						zustand = 4;
 					}
 					else if((i>=65 && i<=90) /*GROß*/ || (i>=97 && i<=122) /*klein*/){
-						s+=c;
 						zustand = 6;
+					}else if(i==-1){
+						zustand = 0;
 					}else{
 						zustand = -10;
 					}
@@ -130,8 +129,9 @@ public class ASScanner {
 						zustand = 4;
 					}
 					else if((i>=65 && i<=90) /*GROß*/ || (i>=97 && i<=122) /*klein*/){
-						s+=c;
 						zustand = 6;
+					}else if(i==-1){
+						zustand = 0;
 					}else{
 						zustand = -10;
 					}
@@ -164,8 +164,9 @@ public class ASScanner {
 						zustand = 4;
 					}
 					else if((i>=65 && i<=90) /*GROß*/ || (i>=97 && i<=122) /*klein*/){
-						s+=c;
 						zustand = 6;
+					}else if(i==-1){
+						zustand = 0;
 					}else{
 						zustand = -10;
 					}
@@ -204,6 +205,9 @@ public class ASScanner {
 					else if((i>=65 && i<=90) /*GROß*/ || (i>=97 && i<=122) /*klein*/){
 						s+=c;
 						zustand = 6;
+					}else if(i==-1){
+						zustand = 0;
+						return new Token(Token.NUM,s);						
 					}else{
 						zustand = -10;
 					}
@@ -244,6 +248,9 @@ public class ASScanner {
 					else if((i>=65 && i<=90) /*GROß*/ || (i>=97 && i<=122) /*klein*/){
 						s+=c;
 						zustand = 6;
+					}else if(i==-1){
+						zustand = 0;
+						return new Token(Token.ID,s);
 					}else{
 						zustand = -10;
 					}
@@ -280,6 +287,9 @@ public class ASScanner {
 					else if((i>=65 && i<=90) /*GROß*/ || (i>=97 && i<=122) /*klein*/){
 						s+=c;
 						zustand = 6;
+					}else if(i==-1){
+						zustand = 0;
+						return new Token(Token.ID,s);
 					}else{
 						zustand = -10;
 					}
@@ -320,6 +330,9 @@ public class ASScanner {
 					else if((i>=65 && i<=90) /*GROß*/ || (i>=97 && i<=122) /*klein*/){
 						s+=c;
 						zustand = 6;
+					}else if(i==-1){
+						zustand = 0;
+						return new Token(Token.ID,s);
 					}else{
 						zustand = -10;
 					}
@@ -351,6 +364,7 @@ public class ASScanner {
 				case 'l':
 					s+=c;
 					token = new Token(Token.NULL,s);
+					s="";
 					zustand = 0;
 					return token;
 				default:
@@ -361,21 +375,22 @@ public class ASScanner {
 					else if((i>=65 && i<=90) /*GROß*/ || (i>=97 && i<=122) /*klein*/){
 						s+=c;
 						zustand = 6;
+					}else if(i==-1){
+						zustand = 0;
+						return new Token(Token.ID,s);
 					}else{
 						zustand = -10;
 					}
 					break;
 				}
 				break;
-			case -1:
-				return new Token(Token.EOF,"");
 			default: //fehler, zeichen nicht bekannt
 				zustand = -10;
 				break;
 			}
 		}
-		
-		return new Token(Token.INVALID, "");
+		throw new Exception();
+		//return new Token(Token.INVALID, "");
 	}
 
 }
