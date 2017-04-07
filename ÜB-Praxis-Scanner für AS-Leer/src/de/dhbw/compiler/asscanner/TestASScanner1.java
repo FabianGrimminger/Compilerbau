@@ -65,8 +65,8 @@ public class TestASScanner1 extends TokenStreamTest {
 	}
 
 	@Test(expected=Exception.class)
-	public void invalidÃ¤() throws Exception {
-		testTokenList(" Ã¤ ", new Token(Token.INVALID,"Ã¤"));	
+	public void invalidÄ() throws Exception {
+		testTokenList("Ä", new Token(Token.INVALID,"Ä"));	
 	}
 	
 	public void invalidGatter() throws Exception {
