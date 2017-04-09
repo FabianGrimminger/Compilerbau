@@ -528,9 +528,10 @@ public class ASScanner {
 					break;
 				}
 				break;
+			//really neccessary
 			case 10: //.^ are here invalid
 				return new Token(Token.INVALID,s);
-			case 11:
+			case 11: //number.
 				switch(c){
 				case '[':
 					token = new Token(Token.FRAC,s);
@@ -595,7 +596,7 @@ public class ASScanner {
 					break;
 				}
 				break;
-			case 12:
+			case 12: //number.{number}^
 				switch(c){
 				case '[':
 					token = new Token(Token.INVALID,s);
@@ -655,7 +656,7 @@ public class ASScanner {
 					break;
 				}
 				break;
-			case 13:
+			case 13://number.{number}^number
 				switch(c){
 				case '[':
 					token = new Token(Token.FRAC,s);
