@@ -61,6 +61,10 @@ public class ASScanner {
 					s="";
 					zustand = 0;
 					break;
+				case '.':
+					zustand = 10;
+				case '^':
+					zustand = 10;
 				default: //hier zahlen und buchstaben abfangen, da anders in switch-case nicht möglich
 					if(i>=48 && i<=57){ //zahlen in ASCII
 						//s+=c;
@@ -105,6 +109,12 @@ public class ASScanner {
 					s="";
 					zustand = 0;
 					break;
+				case '.':
+					zustand = 10;
+					break;
+				case '^':
+					zustand = 10;
+					break;
 				default: //hier zahlen und buchstaben abfangen, da anders in switch-case nicht möglich
 					if(i>=48 && i<=57){ //zahlen in ASCII
 						zustand = 4;
@@ -148,6 +158,12 @@ public class ASScanner {
 					s="";
 					zustand = 0;
 					break;
+				case '.':
+					zustand = 10;
+					break;
+				case '^':
+					zustand = 10;
+					break;
 				default: //hier zahlen und buchstaben abfangen, da anders in switch-case nicht möglich
 					if(i>=48 && i<=57){ //zahlen in ASCII
 						zustand = 4;
@@ -190,6 +206,12 @@ public class ASScanner {
 				case '\r':
 					s="";
 					zustand = 0;
+					break;
+				case '.':
+					zustand = 10;
+					break;
+				case '^':
+					zustand = 10;
 					break;
 				default: //hier zahlen und buchstaben abfangen, da anders in switch-case nicht möglich
 					if(i>=48 && i<=57){ //zahlen in ASCII
@@ -239,6 +261,14 @@ public class ASScanner {
 					s="";
 					zustand = 0;
 					return token;
+				case '.':
+					s+=c;
+					zustand = 11;
+					break;
+				case '^':
+					zustand = 10;
+					s+=c;
+					break;
 				default:
 					if(i>=48 && i<=57){
 						zustand = 4;
@@ -292,6 +322,14 @@ public class ASScanner {
 					s+=c;
 					zustand = 8;
 					break;
+				case '.':
+					s+=c;
+					zustand = 10;
+					break;
+				case '^':
+					s+=c;
+					zustand = 10;
+					break;
 				default:
 					if(i>=48 && i<=57){
 						zustand = 6;
@@ -341,6 +379,14 @@ public class ASScanner {
 					s="";
 					zustand = 0;
 					return token;
+				case '.':
+					s+=c;
+					zustand = 10;
+					break;
+				case '^':
+					s+=c;
+					zustand = 10;
+					break;
 				default:
 					if(i>=48 && i<=57){
 						s+=c;
@@ -393,6 +439,14 @@ public class ASScanner {
 				case 'l':
 					s+=c;
 					zustand = 9;
+					break;
+				case '.':
+					s+=c;
+					zustand = 10;
+					break;
+				case '^':
+					s+=c;
+					zustand = 10;
 					break;
 				default:
 					if(i>=48 && i<=57){
@@ -449,6 +503,14 @@ public class ASScanner {
 					s="";
 					zustand = 0;
 					return token;
+				case '.':
+					s+=c;
+					zustand = 10;
+					break;
+				case '^':
+					s+=c;
+					zustand = 10;
+					break;
 				default:
 					if(i>=48 && i<=57){
 						zustand = 6;
@@ -460,6 +522,199 @@ public class ASScanner {
 					}else if(i==-1){
 						zustand = 0;
 						return new Token(Token.ID,s);
+					}else{
+						zustand = -10;
+					}
+					break;
+				}
+				break;
+			case 10: //.^ are here invalid
+				return new Token(Token.INVALID,s);
+			case 11:
+				switch(c){
+				case '[':
+					token = new Token(Token.FRAC,s);
+					s=""+c;
+					zustand = 1;
+					return token;
+				case ']':
+					token = new Token(Token.FRAC,s);
+					s=""+c;
+					zustand = 2;
+					return token;
+				case ',':
+					token = new Token(Token.FRAC,s);
+					s=""+c;
+					zustand = 3;
+					return token;
+				case ' ':
+					token = new Token(Token.FRAC,s);
+					s="";
+					zustand = 0;
+					return token;
+				case '\n':
+					token = new Token(Token.FRAC,s);
+					s="";
+					zustand = 0;
+					return token;
+				case '\r':
+					token = new Token(Token.FRAC,s);
+					s="";
+					zustand = 0;
+					return token;
+				case '.':
+					s+=c;
+					s+=" - invalid Token charakter: '.'";
+					zustand = 10;
+					break;
+				case '^':
+					zustand = 12;
+					s+=c;
+					break;
+				case 'n':
+					token = new Token(Token.FRAC,s);
+					s=""+c;
+					zustand = 5;
+					return token;
+				default:
+					if(i>=48 && i<=57){
+						zustand = 11;
+						s+=c;
+					}
+					else if((i>=65 && i<=90) /*GROß*/ || (i>=97 && i<=122) /*klein*/){
+						token = new Token(Token.FRAC,s);
+						s=""+c;						
+						zustand = 6;
+						return token;
+					}else if(i==-1){
+						zustand = 0;
+						return new Token(Token.FRAC,s);						
+					}else{
+						zustand = -10;
+					}
+					break;
+				}
+				break;
+			case 12:
+				switch(c){
+				case '[':
+					token = new Token(Token.INVALID,s);
+					s=""+c;
+					zustand = 1;
+					return token;
+				case ']':
+					token = new Token(Token.INVALID,s);
+					s=""+c;
+					zustand = 2;
+					return token;
+				case ',':
+					token = new Token(Token.INVALID,s);
+					s=""+c;
+					zustand = 3;
+					return token;
+				case ' ':
+					token = new Token(Token.INVALID,s);
+					s="";
+					zustand = 0;
+					return token;
+				case '\n':
+					token = new Token(Token.INVALID,s);
+					s="";
+					zustand = 0;
+					return token;
+				case '\r':
+					token = new Token(Token.INVALID,s);
+					s="";
+					zustand = 0;
+					return token;
+				case '.':
+					s+=c;
+					s+=" - invalid Token charakter: '.'";
+					zustand = 10;
+					break;
+				case '^':
+					zustand = 1;
+					s+=c;
+					s+=" - invalid Token charakter: '^'";
+					break;
+				default:
+					if(i>=48 && i<=57){
+						zustand = 13;
+						s+=c;
+					}
+					else if((i>=65 && i<=90) /*GROß*/ || (i>=97 && i<=122) /*klein*/){
+						s+=c;
+						s+=" -invalid Token";
+						zustand = 10;
+					}else if(i==-1){
+						zustand = 0;
+						return new Token(Token.INVALID,s);						
+					}else{
+						zustand = -10;
+					}
+					break;
+				}
+				break;
+			case 13:
+				switch(c){
+				case '[':
+					token = new Token(Token.FRAC,s);
+					s=""+c;
+					zustand = 1;
+					return token;
+				case ']':
+					token = new Token(Token.FRAC,s);
+					s=""+c;
+					zustand = 2;
+					return token;
+				case ',':
+					token = new Token(Token.FRAC,s);
+					s=""+c;
+					zustand = 3;
+					return token;
+				case ' ':
+					token = new Token(Token.FRAC,s);
+					s="";
+					zustand = 0;
+					return token;
+				case '\n':
+					token = new Token(Token.FRAC,s);
+					s="";
+					zustand = 0;
+					return token;
+				case '\r':
+					token = new Token(Token.FRAC,s);
+					s="";
+					zustand = 0;
+					return token;
+				case '.':
+					s+=c;
+					s+=" - invalid Token charakter: '.'";
+					zustand = 10;
+					break;
+				case '^':
+					zustand = 10;
+					s+=c;
+					s+=" - invalid Token charakter: '^'";
+					break;
+				case 'n':
+					zustand = 5;
+					token = new Token(Token.FRAC,s);
+					s=""+c;
+					return token;
+				default:
+					if(i>=48 && i<=57){
+						zustand = 13;
+						s+=c;
+					}
+					else if((i>=65 && i<=90) /*GROß*/ || (i>=97 && i<=122) /*klein*/){
+						zustand = 6;
+						token = new Token(Token.FRAC,s);
+						s=""+c;
+						return token;
+					}else if(i==-1){
+						zustand = 0;
+						return new Token(Token.FRAC,s);						
 					}else{
 						zustand = -10;
 					}
