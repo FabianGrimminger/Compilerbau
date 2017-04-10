@@ -1,8 +1,8 @@
 /* **********************************************
- * Duale Hochschule Baden-Württemberg Karlsruhe
- * Prof. Dr. Jörn Eisenbiegler
+ * Duale Hochschule Baden-Wï¿½rttemberg Karlsruhe
+ * Prof. Dr. Jï¿½rn Eisenbiegler
  * 
- * Vorlesung Übersetzerbau
+ * Vorlesung ï¿½bersetzerbau
  * Praxis AS-Scanner mit JFlex
  * 
  * **********************************************
@@ -15,17 +15,22 @@ import java.io.StringReader;
 
 public class JFlexASScannerMain {
 	
-	private static final String TEST = "[34, x,peter,  34kurt, g56, null,null, 8] ";
+	private static final String TEST = " ";//"[34, x,peter,  34kurt, g56, null,null, 8] ";
 	
 	public static void main(String[] args) throws Exception {
 		
 		JFlexASScanner scanner = new JFlexASScanner(new StringReader(TEST));
-		
+		Token token = scanner.nextToken();
+		while(token.getType()!=Token.EOF){
+			System.out.println(token);
+			token = scanner.nextToken();
+		}
+		System.out.println(token);
 		/* 
 		 * Lesen Sie hier die einzelnen Token des oben angebenen String mit Hilfe des 
 		 * Scanners ein und geben Sie sie auf die Konsole aus. 
 		 */
-
+		
 	}
 
 }

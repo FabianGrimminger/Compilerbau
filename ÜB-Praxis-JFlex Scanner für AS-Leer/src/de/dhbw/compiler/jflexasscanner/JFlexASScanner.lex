@@ -1,8 +1,8 @@
 /* **********************************************
- * Duale Hochschule Baden-Württemberg Karlsruhe
- * Prof. Dr. Jörn Eisenbiegler
+ * Duale Hochschule Baden-Wï¿½rttemberg Karlsruhe
+ * Prof. Dr. Jï¿½rn Eisenbiegler
  * 
- * Vorlesung Übersetzerbau
+ * Vorlesung ï¿½bersetzerbau
  * Praxis AS-Scanner mit JFlex
  * 
  * **********************************************
@@ -14,7 +14,7 @@ package de.dhbw.compiler.jflexasscanner;
 
 %class JFlexASScanner
 %function nextToken
-%type  Token 
+%type  Token
 
 %unicode
 %line
@@ -32,5 +32,13 @@ package de.dhbw.compiler.jflexasscanner;
 
 
 %%
-
-[^]			{ return new Token(Token.INVALID, yytext(), yyline+1, yycolumn+1); }
+\s				{ }
+[\,]			{ return new Token(Token.COMMA, yytext(), yyline+1, yycolumn+1);}
+[\[]			{ return new Token(Token.LSBR, yytext(), yyline+1, yycolumn+1);}
+[\]]			{ return new Token(Token.RSBR, yytext(), yyline+1, yycolumn+1);}
+null			{ return new Token(Token.NULL, yytext(), yyline+1, yycolumn+1);}
+[0-9]+			{ return new Token(Token.NUM, yytext(), yyline+1, yycolumn+1);}
+[a-zA-Z0-9]+	{ return new Token(Token.ID, yytext(), yyline+1, yycolumn+1);}
+[0-9]+[\.][0-9]*([\^][0-9]+)? { return new Token(Token.FRAC, yytext(), yyline+1, yycolumn+1);}
+[^]				{ return new Token(Token.INVALID, yytext(), yyline+1, yycolumn+1); }
+<<EOF>>			{ return new Token(Token.EOF, yytext(), yyline+1, yycolumn+1);}
