@@ -614,10 +614,11 @@ public class ASScanner {
 					zustand = 3;
 					return token;
 				case ' ':
-					token = new Token(Token.INVALID,s);
-					s="";
-					zustand = 0;
-					return token;
+					throw new Exception();
+					//token = new Token(Token.INVALID,s);
+					//s="";
+					//zustand = 0;
+					//return token;
 				case '\n':
 					token = new Token(Token.INVALID,s);
 					s="";
