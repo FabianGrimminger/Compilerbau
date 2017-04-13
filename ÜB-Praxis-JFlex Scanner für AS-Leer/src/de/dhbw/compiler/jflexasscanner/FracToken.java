@@ -1,8 +1,8 @@
 /* **********************************************
- * Duale Hochschule Baden-Württemberg Karlsruhe
- * Prof. Dr. Jörn Eisenbiegler
+ * Duale Hochschule Baden-Wï¿½rttemberg Karlsruhe
+ * Prof. Dr. Jï¿½rn Eisenbiegler
  * 
- * Vorlesung Übersetzerbau
+ * Vorlesung ï¿½bersetzerbau
  * Praxis AS-Scanner mit JFlex
  * - Token-Definition frac
  * 
@@ -13,12 +13,16 @@ package de.dhbw.compiler.jflexasscanner;
 
 public class FracToken extends Token {
 	
-	public FracToken(int type, String text, int line, int column) {
+	double value = 0.0;
+	
+	public FracToken(int type, String text, int line, int column, double value) {
 		super(type, text, line, column);
+		this.value = value;
+		System.out.println(text+" "+value);
 	}
 
 	double getValue() {
-		return 0.0;
+		return value;
 	}
 
 

@@ -23,10 +23,14 @@ package de.dhbw.compiler.jflexasscanner;
 %final 
 %char
 
-%xstate NUM, FRAC, EXP
+%xstate NUM, FRAC, EXP, AFTEREXP
 
 %{
-NumToken numtoken;
+StringBuffer mybuffer;
+int intval;
+double frac = 0;
+double teiler=1;
+double exponent;
 %}
 
 %eofval{ 
@@ -41,18 +45,38 @@ NumToken numtoken;
 null			{ return new Token(Token.NULL, yytext(), yyline+1, yycolumn+1);}
 [0-9]			{
 					yybegin(NUM);
-					numtoken = new NumToken(Token.NUM,yytext(),yyline+1,yycolumn+1);
-					numtoken.addValue(yychar);
-					//return new NumToken(Token.NUM, yytext(), yyline+1, yycolumn+1);
+					mybuffer = new StringBuffer();
+					intval = 0;
+					mybuffer.append(yytext());
+					intval = intval*10 + yytext().charAt(0)-'0';
+					
 				}
-<NUM> [0-9]		{ numtoken.addValue(yychar);}
-<NUM> \.		{ numtoken.setPoint();}
+(\.\.)			{ return new Token(Token.TO, yytext(), yyline+1, yycolumn+1);}
+<NUM> [0-9]		{ mybuffer.append(yytext()); intval = intval*10 + yytext().charAt(0)-'0';}
+<NUM> \. / \.(\.\.)* {yypushback(1); yybegin(YYINITIAL); return new NumToken(Token.NUM, mybuffer.toString(), yyline+1, yycolumn+1-mybuffer.length(), intval);}
+<NUM> \. / (\.\.)* {yybegin(FRAC);mybuffer.append(yytext()); frac = 0; teiler = 1;}
+
+<NUM> [a-zA-Z][0-9a-zA-Z]*	{ yybegin(YYINITIAL); return new Token(Token.ID, mybuffer.toString()+yytext(), yyline+1, yycolumn+1-mybuffer.length());}
 <NUM> [^]   	{ 
 					yybegin(YYINITIAL);
 					yypushback(1);
-					return numtoken;
+					return new NumToken(Token.NUM, mybuffer.toString(), yyline+1, yycolumn+1-mybuffer.length(), intval);
 				}
-[0-9a-zA-Z]+	{ return new Token(Token.ID, yytext(), yyline+1, yycolumn+1);}
-[0-9]+[\.][0-9]*([\^][0-9]+)? { return new FracToken(Token.FRAC, yytext(), yyline+1, yycolumn+1);}
+<NUM> <<EOF>>	{ yybegin(YYINITIAL);return new NumToken(Token.NUM, mybuffer.toString(), yyline+1, yycolumn+1-mybuffer.length(), intval);}
+
+<FRAC> [0-9]	{mybuffer.append(yytext()); frac = frac*10+yytext().charAt(0)-'0'; teiler*=10;}
+<FRAC> [\^][0-9] { yybegin(EXP); yypushback(1); exponent = 0;}
+<FRAC> [^]		{ yybegin(YYINITIAL);  yypushback(1); return new FracToken(Token.FRAC, mybuffer.toString(), yyline+1, yycolumn+1-mybuffer.length(), intval+(frac/teiler));}
+<FRAC> <<EOF>> 	{ yybegin(YYINITIAL); return new FracToken(Token.FRAC, mybuffer.toString(), yyline+1, yycolumn+1-mybuffer.length(), intval+(frac/teiler));}
+
+<EXP> [0-9]		{yybegin(AFTEREXP); mybuffer.append("^"+yytext()); exponent = yytext().charAt(0)-'0';}
+<EXP> [^]		{yybegin(YYINITIAL); yypushback(1); return new FracToken(Token.FRAC, mybuffer.toString(), yyline+1, yycolumn-mybuffer.length(), intval+(frac/teiler));}
+<EXP> <<EOF>>	{yybegin(YYINITIAL); return new FracToken(Token.FRAC, mybuffer.toString(), yyline+1, yycolumn-mybuffer.length(), intval+(frac/teiler));}
+
+<AFTEREXP> [0-9] {exponent = exponent*10+yytext().charAt(0)-'0';mybuffer.append(yytext());}
+<AFTEREXP> [^]	{yybegin(YYINITIAL); yypushback(1); return new FracToken(Token.FRAC, mybuffer.toString(), yyline+1, yycolumn+1-mybuffer.length(), (intval+(frac/teiler))*Math.pow(10,exponent));}
+<AFTEREXP> <<EOF>> {yybegin(YYINITIAL); yypushback(1); return new FracToken(Token.FRAC, mybuffer.toString(), yyline+1, yycolumn+1-mybuffer.length(), (intval+(frac/teiler))*Math.pow(10,exponent));}
+
+[a-zA-Z][0-9a-zA-Z]*	{ return new Token(Token.ID, yytext(), yyline+1, yycolumn+1);}
 [^]				{ return new Token(Token.INVALID, yytext(), yyline+1, yycolumn+1); }
 <<EOF>>			{ return new Token(Token.EOF, yytext(), yyline+1, yycolumn+1);}

@@ -1,8 +1,8 @@
 /* **********************************************
- * Duale Hochschule Baden-Württemberg Karlsruhe
- * Prof. Dr. Jörn Eisenbiegler
+ * Duale Hochschule Baden-Wï¿½rttemberg Karlsruhe
+ * Prof. Dr. Jï¿½rn Eisenbiegler
  * 
- * Vorlesung Übersetzerbau
+ * Vorlesung ï¿½bersetzerbau
  * Praxis AS-Scanner mit JFlex
  * - Token-Definition num
  * 
@@ -13,24 +13,18 @@ package de.dhbw.compiler.jflexasscanner;
 
 public class NumToken extends Token {
 	
-	private int value = 1;
+	private int value = 0;
 	
-	public NumToken(int type, String text, int line, int column) {
+	public NumToken(int type, String text, int line, int column, int value) {
 		super(type,text,line,column);
-		value = Integer.parseInt(text);
-	}
-	
-	void addValue(int text){
-		value = value * (48-text);
-	}
-	
-	void setPoint(){
-		System.out.println("set point");
+		this.value = value;
 	}
 	
 	int getValue() {
 		return value;
 	}
-
-
+	
+	void setValue(int v){
+		value = v;
+	}
 }
