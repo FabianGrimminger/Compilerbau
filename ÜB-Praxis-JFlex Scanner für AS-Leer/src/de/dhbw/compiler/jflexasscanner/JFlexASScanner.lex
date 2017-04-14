@@ -23,7 +23,7 @@ package de.dhbw.compiler.jflexasscanner;
 %final 
 %char
 
-%xstate NUM, FRAC, EXP, AFTEREXP
+%xstate NUM, FRAC, EXP, AFTEREXP, KETTE
 
 %{
 StringBuffer mybuffer;
@@ -78,5 +78,11 @@ null			{ return new Token(Token.NULL, yytext(), yyline+1, yycolumn+1);}
 <AFTEREXP> <<EOF>> {yybegin(YYINITIAL); yypushback(1); return new FracToken(Token.FRAC, mybuffer.toString(), yyline+1, yycolumn+1-mybuffer.length(), (intval+(frac/teiler))*Math.pow(10,exponent));}
 
 [a-zA-Z][0-9a-zA-Z]*	{ return new Token(Token.ID, yytext(), yyline+1, yycolumn+1);}
+[\"]				{ yybegin(KETTE); mybuffer = new StringBuffer(); /*mybuffer.append(yytext());*/}
+<KETTE> [\"]		{yybegin(YYINITIAL);/*mybuffer.append(yytext());*/ return new Token(Token.CHAIN, mybuffer.toString(), yyline+1, yycolumn+1-mybuffer.length());}
+<KETTE> [0-9a-zA-Z\ ]* {mybuffer.append(yytext());}
+<KETTE> (\\\")+	{mybuffer.append("\"");}
+<KETTE> [^]		{yybegin(YYINITIAL); System.out.println("fehler - "+yytext()+";"+mybuffer.toString()); return new Token(Token.INVALID, yytext(), yyline+1, yycolumn+1);}
+<KETTE> <<EOF>> {yybegin(YYINITIAL); return new Token(Token.INVALID, mybuffer.toString(), yyline+1, yycolumn+1-mybuffer.length());}
 [^]				{ return new Token(Token.INVALID, yytext(), yyline+1, yycolumn+1); }
 <<EOF>>			{ return new Token(Token.EOF, yytext(), yyline+1, yycolumn+1);}

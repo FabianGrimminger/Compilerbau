@@ -1,8 +1,8 @@
 /* **********************************************
- * Duale Hochschule Baden-Württemberg Karlsruhe
- * Prof. Dr. Jörn Eisenbiegler
+ * Duale Hochschule Baden-Wï¿½rttemberg Karlsruhe
+ * Prof. Dr. Jï¿½rn Eisenbiegler
  * 
- * Vorlesung Übersetzerbau
+ * Vorlesung ï¿½bersetzerbau
  * Praxis AS-Scanner mit JFlex
  * - Token-Definition
  * 
@@ -23,6 +23,7 @@ public class Token {
 	public static final int NULL = 6;
 	public static final int FRAC = 7;
 	public static final int TO = 8;
+	public static final int CHAIN = 9;
 	
 	private int type;
 	private String text;
@@ -72,6 +73,7 @@ public class Token {
 			case NULL: return "NULL";
 			case FRAC: return "FRAC";
 			case TO: return "TO";
+			case CHAIN: return "CHAIN";
 			default: return "Unknown token type!";
 		}
 			

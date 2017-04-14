@@ -32,6 +32,7 @@ public final class JFlexASScanner {
   public static final int FRAC = 4;
   public static final int EXP = 6;
   public static final int AFTEREXP = 8;
+  public static final int KETTE = 10;
 
   /**
    * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
@@ -40,18 +41,18 @@ public final class JFlexASScanner {
    * l is of the form l = 2*k, k a non negative integer
    */
   private static final int ZZ_LEXSTATE[] = { 
-     0,  0,  1,  1,  2,  2,  3,  3,  4, 4
+     0,  0,  1,  1,  2,  2,  3,  3,  4,  4,  5, 5
   };
 
   /** 
    * Translates characters to character classes
    */
   private static final String ZZ_CMAP_PACKED = 
-    "\11\0\5\1\22\0\1\1\13\0\1\2\1\0\1\11\1\0\12\10"+
-    "\7\0\32\12\1\3\1\0\1\4\1\13\2\0\13\12\1\7\1\12"+
-    "\1\5\6\12\1\6\5\12\12\0\1\1\32\0\1\1\u15df\0\1\1"+
-    "\u097f\0\13\1\35\0\2\1\5\0\1\1\57\0\1\1\u0fa0\0\1\1"+
-    "\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\ud00f\0";
+    "\11\0\5\1\22\0\1\15\1\0\1\14\11\0\1\2\1\0\1\11"+
+    "\1\0\12\10\7\0\32\12\1\3\1\16\1\4\1\13\2\0\13\12"+
+    "\1\7\1\12\1\5\6\12\1\6\5\12\12\0\1\1\32\0\1\1"+
+    "\u15df\0\1\1\u097f\0\13\1\35\0\2\1\5\0\1\1\57\0\1\1"+
+    "\u0fa0\0\1\1\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\ud00f\0";
 
   /** 
    * Translates characters to character classes
@@ -64,13 +65,14 @@ public final class JFlexASScanner {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\5\0\1\1\1\2\1\3\1\4\1\5\2\6\1\7"+
-    "\1\1\1\10\1\11\1\12\1\13\1\14\1\15\1\14"+
-    "\1\16\1\17\1\20\1\21\1\6\1\22\1\23\1\24"+
-    "\1\6\1\25";
+    "\5\0\1\1\1\2\1\3\1\4\1\5\1\6\2\7"+
+    "\1\10\1\2\1\11\1\12\1\13\1\14\1\15\1\16"+
+    "\1\17\1\16\1\20\1\21\1\22\1\23\1\24\1\1"+
+    "\1\25\1\24\1\7\1\26\1\27\1\30\1\31\1\7"+
+    "\1\0\1\32";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[31];
+    int [] result = new int[39];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -95,13 +97,14 @@ public final class JFlexASScanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\14\0\30\0\44\0\60\0\74\0\74\0\74"+
-    "\0\74\0\74\0\110\0\124\0\74\0\140\0\74\0\154"+
-    "\0\74\0\170\0\74\0\74\0\204\0\74\0\74\0\74"+
-    "\0\74\0\220\0\74\0\234\0\74\0\250\0\124";
+    "\0\0\0\17\0\36\0\55\0\74\0\113\0\132\0\132"+
+    "\0\132\0\132\0\132\0\151\0\170\0\132\0\207\0\132"+
+    "\0\132\0\226\0\132\0\245\0\132\0\132\0\264\0\132"+
+    "\0\132\0\132\0\132\0\132\0\303\0\132\0\322\0\341"+
+    "\0\132\0\360\0\132\0\377\0\u010e\0\322\0\170";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[31];
+    int [] result = new int[39];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -124,17 +127,20 @@ public final class JFlexASScanner {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\6\1\7\1\10\1\11\1\12\1\13\2\14\1\15"+
-    "\1\16\1\14\1\6\5\17\3\20\1\21\1\22\1\20"+
-    "\1\17\10\23\1\24\2\23\1\25\10\26\1\27\3\26"+
-    "\10\30\1\31\3\30\21\0\1\14\1\32\2\14\1\0"+
-    "\1\14\6\0\4\14\1\0\1\14\12\0\1\33\7\0"+
-    "\4\20\1\0\1\20\12\0\1\34\12\0\1\35\10\0"+
-    "\2\14\1\36\1\14\1\0\1\14\12\0\1\22\7\0"+
-    "\2\14\1\37\1\14\1\0\1\14\1\0";
+    "\1\7\1\10\1\11\1\12\1\13\1\14\2\15\1\16"+
+    "\1\17\1\15\1\7\1\20\1\10\1\7\5\21\3\22"+
+    "\1\23\1\24\1\22\4\21\10\25\1\26\2\25\1\27"+
+    "\3\25\10\30\1\31\6\30\10\32\1\33\6\32\5\34"+
+    "\4\35\1\34\1\35\1\34\1\36\1\35\1\37\24\0"+
+    "\1\15\1\40\2\15\1\0\1\15\11\0\4\15\1\0"+
+    "\1\15\15\0\1\41\12\0\4\22\1\0\1\22\15\0"+
+    "\1\42\15\0\1\43\13\0\4\35\1\0\1\35\2\0"+
+    "\1\35\15\0\1\44\7\0\2\15\1\45\1\15\1\0"+
+    "\1\15\15\0\1\24\23\0\1\46\5\0\2\15\1\47"+
+    "\1\15\1\0\1\15\4\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[180];
+    int [] result = new int[285];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -172,12 +178,12 @@ public final class JFlexASScanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\5\0\5\11\2\1\1\11\1\1\1\11\1\1\1\11"+
-    "\1\1\2\11\1\1\4\11\1\1\1\11\1\1\1\11"+
-    "\2\1";
+    "\5\0\1\1\5\11\2\1\1\11\1\1\2\11\1\1"+
+    "\1\11\1\1\2\11\1\1\5\11\1\1\1\11\2\1"+
+    "\1\11\1\1\1\11\2\1\1\0\1\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[31];
+    int [] result = new int[39];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -280,7 +286,7 @@ double exponent;
     char [] map = new char[0x110000];
     int i = 0;  /* index in packed string  */
     int j = 0;  /* index in unpacked array */
-    while (i < 114) {
+    while (i < 118) {
       int  count = packed.charAt(i++);
       char value = packed.charAt(i++);
       do map[j++] = value; while (--count > 0);
@@ -632,19 +638,23 @@ double exponent;
             case NUM: {
               yybegin(YYINITIAL);return new NumToken(Token.NUM, mybuffer.toString(), yyline+1, yycolumn+1-mybuffer.length(), intval);
             }
-            case 32: break;
+            case 40: break;
             case FRAC: {
               yybegin(YYINITIAL); return new FracToken(Token.FRAC, mybuffer.toString(), yyline+1, yycolumn+1-mybuffer.length(), intval+(frac/teiler));
             }
-            case 33: break;
+            case 41: break;
             case EXP: {
               yybegin(YYINITIAL); return new FracToken(Token.FRAC, mybuffer.toString(), yyline+1, yycolumn-mybuffer.length(), intval+(frac/teiler));
             }
-            case 34: break;
+            case 42: break;
             case AFTEREXP: {
               yybegin(YYINITIAL); yypushback(1); return new FracToken(Token.FRAC, mybuffer.toString(), yyline+1, yycolumn+1-mybuffer.length(), (intval+(frac/teiler))*Math.pow(10,exponent));
             }
-            case 35: break;
+            case 43: break;
+            case KETTE: {
+              yybegin(YYINITIAL); return new Token(Token.INVALID, mybuffer.toString(), yyline+1, yycolumn+1-mybuffer.length());
+            }
+            case 44: break;
             default:
               {
                 return new Token(Token.EOF, yytext(), yyline+1, yycolumn+1);
@@ -654,101 +664,121 @@ double exponent;
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1: 
-            { return new Token(Token.INVALID, yytext(), yyline+1, yycolumn+1);
-            }
-          case 22: break;
-          case 2: 
-            { 
-            }
-          case 23: break;
-          case 3: 
-            { return new Token(Token.COMMA, yytext(), yyline+1, yycolumn+1);
-            }
-          case 24: break;
-          case 4: 
-            { return new Token(Token.LSBR, yytext(), yyline+1, yycolumn+1);
-            }
-          case 25: break;
-          case 5: 
-            { return new Token(Token.RSBR, yytext(), yyline+1, yycolumn+1);
-            }
-          case 26: break;
-          case 6: 
-            { return new Token(Token.ID, yytext(), yyline+1, yycolumn+1);
+            { mybuffer.append(yytext());
             }
           case 27: break;
+          case 2: 
+            { return new Token(Token.INVALID, yytext(), yyline+1, yycolumn+1);
+            }
+          case 28: break;
+          case 3: 
+            { 
+            }
+          case 29: break;
+          case 4: 
+            { return new Token(Token.COMMA, yytext(), yyline+1, yycolumn+1);
+            }
+          case 30: break;
+          case 5: 
+            { return new Token(Token.LSBR, yytext(), yyline+1, yycolumn+1);
+            }
+          case 31: break;
+          case 6: 
+            { return new Token(Token.RSBR, yytext(), yyline+1, yycolumn+1);
+            }
+          case 32: break;
           case 7: 
+            { return new Token(Token.ID, yytext(), yyline+1, yycolumn+1);
+            }
+          case 33: break;
+          case 8: 
             { yybegin(NUM);
 					mybuffer = new StringBuffer();
 					intval = 0;
 					mybuffer.append(yytext());
 					intval = intval*10 + yytext().charAt(0)-'0';
             }
-          case 28: break;
-          case 8: 
+          case 34: break;
+          case 9: 
+            { yybegin(KETTE); mybuffer = new StringBuffer(); /*mybuffer.append(yytext());*/
+            }
+          case 35: break;
+          case 10: 
             { yybegin(YYINITIAL);
 					yypushback(1);
 					return new NumToken(Token.NUM, mybuffer.toString(), yyline+1, yycolumn+1-mybuffer.length(), intval);
             }
-          case 29: break;
-          case 9: 
+          case 36: break;
+          case 11: 
             { yybegin(YYINITIAL); return new Token(Token.ID, mybuffer.toString()+yytext(), yyline+1, yycolumn+1-mybuffer.length());
             }
-          case 30: break;
-          case 10: 
+          case 37: break;
+          case 12: 
             { mybuffer.append(yytext()); intval = intval*10 + yytext().charAt(0)-'0';
             }
-          case 31: break;
-          case 11: 
+          case 38: break;
+          case 13: 
             // lookahead expression with fixed base length
             zzMarkedPos = Character.offsetByCodePoints
                 (zzBufferL, zzStartRead, zzEndRead - zzStartRead, zzStartRead, 1);
             { yybegin(FRAC);mybuffer.append(yytext()); frac = 0; teiler = 1;
             }
-          case 32: break;
-          case 12: 
+          case 39: break;
+          case 14: 
             { yybegin(YYINITIAL);  yypushback(1); return new FracToken(Token.FRAC, mybuffer.toString(), yyline+1, yycolumn+1-mybuffer.length(), intval+(frac/teiler));
             }
-          case 33: break;
-          case 13: 
+          case 40: break;
+          case 15: 
             { mybuffer.append(yytext()); frac = frac*10+yytext().charAt(0)-'0'; teiler*=10;
             }
-          case 34: break;
-          case 14: 
+          case 41: break;
+          case 16: 
             { yybegin(YYINITIAL); yypushback(1); return new FracToken(Token.FRAC, mybuffer.toString(), yyline+1, yycolumn-mybuffer.length(), intval+(frac/teiler));
             }
-          case 35: break;
-          case 15: 
+          case 42: break;
+          case 17: 
             { yybegin(AFTEREXP); mybuffer.append("^"+yytext()); exponent = yytext().charAt(0)-'0';
             }
-          case 36: break;
-          case 16: 
+          case 43: break;
+          case 18: 
             { yybegin(YYINITIAL); yypushback(1); return new FracToken(Token.FRAC, mybuffer.toString(), yyline+1, yycolumn+1-mybuffer.length(), (intval+(frac/teiler))*Math.pow(10,exponent));
             }
-          case 37: break;
-          case 17: 
+          case 44: break;
+          case 19: 
             { exponent = exponent*10+yytext().charAt(0)-'0';mybuffer.append(yytext());
             }
-          case 38: break;
-          case 18: 
+          case 45: break;
+          case 20: 
+            { yybegin(YYINITIAL); System.out.println("fehler - "+yytext()+";"+mybuffer.toString()); return new Token(Token.INVALID, yytext(), yyline+1, yycolumn+1);
+            }
+          case 46: break;
+          case 21: 
+            { yybegin(YYINITIAL);/*mybuffer.append(yytext());*/ return new Token(Token.CHAIN, mybuffer.toString(), yyline+1, yycolumn+1-mybuffer.length());
+            }
+          case 47: break;
+          case 22: 
             { return new Token(Token.TO, yytext(), yyline+1, yycolumn+1);
             }
-          case 39: break;
-          case 19: 
+          case 48: break;
+          case 23: 
             // lookahead expression with fixed base length
             zzMarkedPos = Character.offsetByCodePoints
                 (zzBufferL, zzStartRead, zzEndRead - zzStartRead, zzStartRead, 1);
             { yypushback(1); yybegin(YYINITIAL); return new NumToken(Token.NUM, mybuffer.toString(), yyline+1, yycolumn+1-mybuffer.length(), intval);
             }
-          case 40: break;
-          case 20: 
+          case 49: break;
+          case 24: 
             { yybegin(EXP); yypushback(1); exponent = 0;
             }
-          case 41: break;
-          case 21: 
+          case 50: break;
+          case 25: 
+            { mybuffer.append("\"");
+            }
+          case 51: break;
+          case 26: 
             { return new Token(Token.NULL, yytext(), yyline+1, yycolumn+1);
             }
-          case 42: break;
+          case 52: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

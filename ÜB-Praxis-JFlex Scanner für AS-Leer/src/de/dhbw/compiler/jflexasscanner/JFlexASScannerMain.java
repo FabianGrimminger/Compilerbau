@@ -15,7 +15,7 @@ import java.io.StringReader;
 
 public class JFlexASScannerMain {
 	
-	private static final String TEST = "[34, x,peter,58,  34kurt, g56, null,null, 8] ";
+	private static final String TEST ="[\"Hallo \\\" schoene \\\" Welt\" ,34, x,peter,58,  34kurt, g56, null,null, 8] ";
 	
 	public static void main(String[] args) throws Exception {
 		
