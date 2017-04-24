@@ -83,13 +83,16 @@ public class Tree {
 		StringBuffer res = new StringBuffer(); 
 		if (children.isEmpty()) {
 			res.append(token.getText());
+			System.out.println("empty: "+res.toString());
 		} else {
 			res.append("("+this.token.getText());
 			for (Tree c: children) {
 				res.append(" "+c.toString());
+				System.out.println("append: "+res.toString());
 			}
 			res.append(")");
 		}
+		System.out.println(res.toString());
 		return res.toString();
 		
 	}

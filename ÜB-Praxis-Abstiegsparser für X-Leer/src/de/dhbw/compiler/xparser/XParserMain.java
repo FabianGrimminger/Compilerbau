@@ -21,6 +21,21 @@ public class XParserMain {
 											"begin\n"+
 											"end.";
 	
+	private static final String TESTCOND = "program cond;\n"+
+			"begin\n"+
+			"	if 2<3 then x:=1;"+
+			"end.";
+	
+	private static final String testa =	"program assign;\n"+
+			"begin\n"+
+			"	x :=1;"+
+			"end.";
+	
+	private static final String minmin = "program exprUMinus;\n"+
+			"begin\n"+
+			"	x :=0--1;"+
+			"end.";
+	
 	private static final String TESTXmin1 = 
 			"program xmin1;\n"+
 			"begin\n"+
@@ -73,12 +88,15 @@ public class XParserMain {
 	public static void main(String[] args) throws Exception {
 		
 		//TODO Initialize scanner and parser
-		JFlexXScanner scanner = new JFlexXScanner(new StringReader(TESTXmin1));
+		JFlexXScanner scanner = new JFlexXScanner(new StringReader(testa));
 		XParser parser = new XParser(new TokenReader(scanner));
 		//TODO Call parser
 		Tree mtree = parser.parseProgram();
 		//TODO Output: Tree, count of tokens and comparisons
+		System.out.println(mtree);
 		System.out.println(mtree.toString());
+		System.out.println();
+		//System.out.println(mtree.toGraphvizDot());
 	}
 
 }

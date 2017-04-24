@@ -265,8 +265,8 @@ public class TestXScanner1 extends TokenStreamTest {
 	}
 
 	@Test
-	public void invalid√Ñ() throws Exception {
-		testTokenList(" √Ñ ", false, new Token(Token.INVALID,"√Ñ",1,2));	
+	public void invalid√() throws Exception {
+		testTokenList(" √ ", false, new Token(Token.INVALID,"√",1,2));	
 	}
 	
 	@Test

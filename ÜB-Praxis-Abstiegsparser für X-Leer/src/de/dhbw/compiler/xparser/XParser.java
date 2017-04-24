@@ -255,21 +255,73 @@ public class XParser {
 		in.setPosition(pos);
 		return null;
 	}
-
-	public Tree parseIntConst(){
+	
+	public Tree parseNumExp3(){
 		int pos = in.getPosition();
-		Tree m = null;
-		Tree n = null;
-		if( (m=parseMinus())!=null && (n=parseIntNumber())!=null){
-			Tree t = new Tree(new Token(Token.INTCONST));
-			t.addLastChild(m);
-			t.addLastChild(n);
+		Tree a = null;
+		Tree b = null;
+		Tree c = null;		
+		
+		if( (a=parseLBR())!=null && (b=parseNumExp())!=null && (c=parseRBR())!=null){
+			Tree t = new Tree(new Token(Token.EXPR3));
+			t.addLastChild(a);
+			t.addLastChild(b);
+			t.addLastChild(c);
 			return t;
 		}
 		in.setPosition(pos);
-		if((n=parseIntNumber())!=null){
-			Tree t = new Tree(new Token(Token.INTCONST));
-			t.addLastChild(n);
+		
+		if( (a=parseMinus())!=null && (b=parseIntNumber())!=null){
+			Tree t = new Tree(new Token(Token.EXPR3));
+			t.addLastChild(a);
+			t.addLastChild(b);
+			return t;
+		}
+		in.setPosition(pos);
+		
+		if((a=parseIntNumber())!=null){
+			Tree t = new Tree(new Token(Token.EXPR3));
+			t.addLastChild(a);
+			return t;
+		}
+		in.setPosition(pos);
+		
+		if( (a=parseID())!=null){
+			Tree t = new Tree(new Token(Token.EXPR3));
+			t.addLastChild(a);
+			return t;
+		}
+		in.setPosition(pos);
+		return null;
+	}
+	
+	public Tree parseNumExp2(){
+		int pos = in.getPosition();
+		Tree a = null;
+		Tree b = null;
+		Tree c = null;
+		
+		if((a=parseNumExp3())!=null && (b=parseMult())!=null && (c=parseNumExp2())!=null){
+			Tree t = new Tree(new Token(Token.EXPR2));
+			t.addLastChild(a);
+			t.addLastChild(b);
+			t.addLastChild(c);
+			return t;
+		}
+		in.setPosition(pos);
+		
+		if( (a=parseNumExp3())!=null && (b=parseDiv())!=null && (c=parseNumExp2())!=null){
+			Tree t = new Tree(new Token(Token.EXPR2));
+			t.addLastChild(a);
+			t.addLastChild(b);
+			t.addLastChild(c);
+			return t;
+		}
+		
+		in.setPosition(pos);
+		if( (a=parseNumExp3())!=null){
+			Tree t = new Tree(new Token(Token.EXPR2));
+			t.addLastChild(a);
 			return t;
 		}
 		in.setPosition(pos);
@@ -280,17 +332,17 @@ public class XParser {
 		int pos = in.getPosition();
 		Tree a = null;
 		Tree b = null;
-		Tree c = null;
-		if( (a=parseLBR())!=null && (b=parseNumExp())!=null && (c=parseRBR())!=null){
-			Tree t = new Tree(new Token(Token.EXPR));
-			t.addLastChild(a);
-			t.addLastChild(b);
-			t.addLastChild(c);
-			return t;
-		}
-		in.setPosition(pos);
+		Tree c = null;		
 		
-		if( (a=parseIntConst())!=null){
+		if( (a=parseNumExp2())!=null && (b=parsePlus())!=null && (c=parseNumExp())!=null){
+			Tree t = new Tree(new Token(Token.EXPR));
+			t.addLastChild(a);
+			t.addLastChild(b);
+			t.addLastChild(c);
+			return t;
+		}
+		in.setPosition(pos);		
+		if( (a=parseNumExp2())!=null && (b=parseMinus())!=null && (c=parseNumExp())!=null){
 			Tree t = new Tree(new Token(Token.EXPR));
 			t.addLastChild(a);
 			t.addLastChild(b);
@@ -298,48 +350,12 @@ public class XParser {
 			return t;
 		}
 		in.setPosition(pos);
-		
-		if( (a=parseID())!=null){
+		if( (a=parseNumExp2())!=null){
 			Tree t = new Tree(new Token(Token.EXPR));
 			t.addLastChild(a);
 			return t;
 		}
-		in.setPosition(pos);
-		if( (a=parseNumExp())!=null && (b=parsePlus())!=null && (c=parseNumExp())!=null){
-			Tree t = new Tree(new Token(Token.EXPR));
-			t.addLastChild(a);
-			t.addLastChild(b);
-			t.addLastChild(c);
-			return t;
-		}
-		in.setPosition(pos);
-		
-		if( (a=parseNumExp())!=null && (b=parseMinus())!=null && (c=parseNumExp())!=null){
-			Tree t = new Tree(new Token(Token.EXPR));
-			t.addLastChild(a);
-			t.addLastChild(b);
-			t.addLastChild(c);
-			return t;
-		}
-		in.setPosition(pos);
-		
-		if( (a=parseNumExp())!=null && (b=parseMult())!=null && (c=parseNumExp())!=null){
-			Tree t = new Tree(new Token(Token.EXPR));
-			t.addLastChild(a);
-			t.addLastChild(b);
-			t.addLastChild(c);
-			return t;
-		}
-		in.setPosition(pos);
-		
-		if( (a=parseNumExp())!=null && (b=parseDiv())!=null && (c=parseNumExp())!=null){
-			Tree t = new Tree(new Token(Token.EXPR));
-			t.addLastChild(a);
-			t.addLastChild(b);
-			t.addLastChild(c);
-			return t;
-		}
-		in.setPosition(pos);
+		in.setPosition(pos);		
 		return null;
 	}
 	
