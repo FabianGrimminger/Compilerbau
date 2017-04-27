@@ -26,9 +26,10 @@ public class XParserMain {
 			"	if 2<3 then x:=1;"+
 			"end.";
 	
-	private static final String testa =	"program assign;\n"+
+	private static final String testa =	"program exprAll;\n"+
+			"  x: string;"+
 			"begin\n"+
-			"	x :=1;"+
+			"	while (2<x) x:= x+1;"+
 			"end.";
 	
 	private static final String minmin = "program exprUMinus;\n"+
@@ -88,7 +89,7 @@ public class XParserMain {
 	public static void main(String[] args) throws Exception {
 		
 		//TODO Initialize scanner and parser
-		JFlexXScanner scanner = new JFlexXScanner(new StringReader(TESTXmin1));
+		JFlexXScanner scanner = new JFlexXScanner(new StringReader(testa));
 		XParser parser = new XParser(new TokenReader(scanner));
 		//TODO Call parser
 		Tree mtree = parser.parseProgram();
