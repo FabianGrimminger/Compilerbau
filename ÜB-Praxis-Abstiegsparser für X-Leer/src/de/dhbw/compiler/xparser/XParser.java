@@ -16,7 +16,9 @@ import org.junit.experimental.theories.ParametersSuppliedBy;
 public class XParser {
 
 	TokenReader in;
-
+	int counter = 0;
+	int match = 0;
+	
 	public XParser(TokenReader in) {
 		//TODO Initialization
 		this.in = in;
@@ -32,7 +34,7 @@ public class XParser {
 		Tree e = null;
 		Tree f = null;
 		
-		if((a=parsePROGRAM())!=null && (b=parseID())!=null && (c=parseSEMI())!=null && (d=parseBlock())!=null && (e=parseDOT())!=null && (f=parseEOF())!=null){
+		if((a=parseToken(Token.PROGRAM))!=null && (b=parseToken(Token.ID))!=null && (c=parseToken(Token.SEMICOLON))!=null && (d=parseBlock())!=null && (e=parseToken(Token.DOT))!=null && (f=parseToken(Token.EOF))!=null){
 			Tree t = new Tree(new Token(Token.APROGRAM));
 			t.addLastChild(a);
 			t.addLastChild(b);
@@ -40,229 +42,30 @@ public class XParser {
 			t.addLastChild(d);
 			t.addLastChild(e);
 			t.addLastChild(f);
+			System.out.println(""+counter+" parseToken |"+match+" passend |"+in.getTokenCount()+" Token");
 			return t;
 		}
 		in.setPosition(pos);
 		return null;
 	}
-	
-	public Tree parseEOF(){
+	public Tree parseToken(int token){
+		counter++;
 		int pos = in.getPosition();
 		Token next = in.nextToken();
-		if(next.getType()==Token.EOF){
+		if(next.getType()==token){
+			match++;
 			return new Tree(next);
 		}
 		in.setPosition(pos);
 		return null;
 	}
-	
-	public Tree parseEND(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if(next.getType()==Token.END){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
-	public Tree parseSEMI(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if(next.getType()==Token.SEMICOLON){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
-	public Tree parseBEGIN(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if(next.getType()==Token.BEGIN){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
-	public Tree parseDOT(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if(next.getType()==Token.DOT){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
-	public Tree parsePROGRAM(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if(next.getType()==Token.PROGRAM){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
-	public Tree parseLBR(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if(next.getType()==Token.LBR){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
-	public Tree parseRBR(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if(next.getType()==Token.RBR){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
-	public Tree parseASS(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if(next.getType()==Token.ASSIGN){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
-	public Tree parsePlus(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if(next.getType()==Token.PLUS){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
-	public Tree parseMinus(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if(next.getType()==Token.MINUS){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
-	public Tree parseMult(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if(next.getType()==Token.MULT){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
-	public Tree parseDiv(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if(next.getType()==Token.DIV){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
-	public Tree parseID(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if(next.getType()==Token.ID){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
-	public Tree parseIF(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if( next.getType() == Token.IF){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
-	public Tree parseTHEN(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if( next.getType() == Token.THEN){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
-	public Tree parseELSE(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if( next.getType() == Token.ELSE){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
-	public Tree parseLESS(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if( next.getType() == Token.LESS){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
-	public Tree parseEQUAL(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if( next.getType() == Token.EQUALS){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
-	public Tree parseMORE(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if( next.getType() == Token.MORE){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
-	public Tree parseIntNumber(){
-		int pos = in.getPosition();
-		Token next = in.nextToken();
-		if(next.getType()==Token.INTCONST){
-			return new Tree(next);
-		}
-		in.setPosition(pos);
-		return null;
-	}
-	
 	public Tree parseNumExp3(){
 		int pos = in.getPosition();
 		Tree a = null;
 		Tree b = null;
 		Tree c = null;		
 		
-		if( (a=parseLBR())!=null && (b=parseNumExp())!=null && (c=parseRBR())!=null){
+		if( (a=parseToken(Token.LBR))!=null && (b=parseNumExp())!=null && (c=parseToken(Token.RBR))!=null){
 			Tree t = new Tree(new Token(Token.EXPR3));
 			t.addLastChild(a);
 			t.addLastChild(b);
@@ -271,7 +74,7 @@ public class XParser {
 		}
 		in.setPosition(pos);
 		
-		if( (a=parseMinus())!=null && (b=parseIntNumber())!=null){
+		if( (a=parseToken(Token.MINUS))!=null && (b=parseToken(Token.INTCONST))!=null){
 			Tree t = new Tree(new Token(Token.EXPR3));
 			t.addLastChild(a);
 			t.addLastChild(b);
@@ -279,14 +82,14 @@ public class XParser {
 		}
 		in.setPosition(pos);
 		
-		if((a=parseIntNumber())!=null){
+		if((a=parseToken(Token.INTCONST))!=null){
 			Tree t = new Tree(new Token(Token.EXPR3));
 			t.addLastChild(a);
 			return t;
 		}
 		in.setPosition(pos);
 		
-		if( (a=parseID())!=null){
+		if( (a=parseToken(Token.ID))!=null){
 			Tree t = new Tree(new Token(Token.EXPR3));
 			t.addLastChild(a);
 			return t;
@@ -301,7 +104,7 @@ public class XParser {
 		Tree b = null;
 		Tree c = null;
 		
-		if((a=parseNumExp3())!=null && (b=parseMult())!=null && (c=parseNumExp2())!=null){
+		if((a=parseNumExp3())!=null && (b=parseToken(Token.MULT))!=null && (c=parseNumExp2())!=null){
 			Tree t = new Tree(new Token(Token.EXPR2));
 			t.addLastChild(a);
 			t.addLastChild(b);
@@ -310,7 +113,7 @@ public class XParser {
 		}
 		in.setPosition(pos);
 		
-		if( (a=parseNumExp3())!=null && (b=parseDiv())!=null && (c=parseNumExp2())!=null){
+		if( (a=parseNumExp3())!=null && (b=parseToken(Token.DIV))!=null && (c=parseNumExp2())!=null){
 			Tree t = new Tree(new Token(Token.EXPR2));
 			t.addLastChild(a);
 			t.addLastChild(b);
@@ -334,7 +137,7 @@ public class XParser {
 		Tree b = null;
 		Tree c = null;		
 		
-		if( (a=parseNumExp2())!=null && (b=parsePlus())!=null && (c=parseNumExp())!=null){
+		if( (a=parseNumExp2())!=null && (b=parseToken(Token.PLUS))!=null && (c=parseNumExp())!=null){
 			Tree t = new Tree(new Token(Token.EXPR));
 			t.addLastChild(a);
 			t.addLastChild(b);
@@ -342,7 +145,7 @@ public class XParser {
 			return t;
 		}
 		in.setPosition(pos);		
-		if( (a=parseNumExp2())!=null && (b=parseMinus())!=null && (c=parseNumExp())!=null){
+		if( (a=parseNumExp2())!=null && (b=parseToken(Token.MINUS))!=null && (c=parseNumExp())!=null){
 			Tree t = new Tree(new Token(Token.EXPR));
 			t.addLastChild(a);
 			t.addLastChild(b);
@@ -365,7 +168,7 @@ public class XParser {
 		Tree b = null;
 		Tree c = null;
 		
-		if((a=parseID())!=null && (b=parseASS())!=null && (c=parseNumExp())!=null){
+		if((a=parseToken(Token.ID))!=null && (b=parseToken(Token.ASSIGN))!=null && (c=parseNumExp())!=null){
 			Tree t = new Tree(new Token(Token.ASSIGNSTAT));
 			t.addLastChild(a);
 			t.addLastChild(b);
@@ -385,7 +188,7 @@ public class XParser {
 		Tree e = null;
 		Tree f = null;
 		
-		if( (a=parseIF())!=null && (b=parseCond())!=null && (c=parseTHEN())!=null && (d=parseStat())!=null){
+		if( (a=parseToken(Token.IF))!=null && (b=parseCond())!=null && (c=parseToken(Token.THEN))!=null && (d=parseStat())!=null){
 			Tree t = new Tree(new Token(Token.CONDSTAT));
 			t.addLastChild(a);
 			t.addLastChild(b);
@@ -393,7 +196,7 @@ public class XParser {
 			t.addLastChild(d);
 			
 			int tpos = in.getPosition();
-			if((e=parseELSE())!=null && (f=parseStat())!=null){
+			if((e=parseToken(Token.ELSE))!=null && (f=parseStat())!=null){
 				t.addLastChild(e);
 				t.addLastChild(f);
 				return t;
@@ -412,7 +215,7 @@ public class XParser {
 		Tree b = null;
 		Tree c = null;
 		
-		if( (a=parseNumExp())!=null && (b=parseLESS())!=null && (c=parseNumExp())!=null){
+		if( (a=parseNumExp())!=null && (b=parseToken(Token.LESS))!=null && (c=parseNumExp())!=null){
 			Tree t = new Tree(new Token(Token.COND));
 			t.addLastChild(a);
 			t.addLastChild(b);
@@ -421,7 +224,7 @@ public class XParser {
 		}
 		in.setPosition(pos);
 		
-		if( (a=parseNumExp())!=null && (b=parseEQUAL())!=null && (c=parseNumExp())!=null){
+		if( (a=parseNumExp())!=null && (b=parseToken(Token.EQUALS))!=null && (c=parseNumExp())!=null){
 			Tree t = new Tree(new Token(Token.COND));
 			t.addLastChild(a);
 			t.addLastChild(b);
@@ -430,7 +233,7 @@ public class XParser {
 		}
 		in.setPosition(pos);
 		
-		if( (a=parseNumExp())!=null && (b=parseMORE())!=null && (c=parseNumExp())!=null){
+		if( (a=parseNumExp())!=null && (b=parseToken(Token.MORE))!=null && (c=parseNumExp())!=null){
 			Tree t = new Tree(new Token(Token.COND));
 			t.addLastChild(a);
 			t.addLastChild(b);
@@ -468,7 +271,7 @@ public class XParser {
 		Tree a = null;
 		Tree b = null;
 		
-		if((a=parseStat())!=null && (b=parseSEMI())!=null){
+		if((a=parseStat())!=null && (b=parseToken(Token.SEMICOLON))!=null){
 			Tree t = new Tree(new Token(Token.STATWITHSEMI));
 			t.addLastChild(a);
 			t.addLastChild(b);
@@ -496,7 +299,7 @@ public class XParser {
 		Tree b = null;
 		Tree c = null;
 		
-		if((a=parseBEGIN())!=null && (b=parseStatList())!=null && (c=parseEND())!=null){
+		if((a=parseToken(Token.BEGIN))!=null && (b=parseStatList())!=null && (c=parseToken(Token.END))!=null){
 			Tree t = new Tree(new Token(Token.BLOCK));
 			t.addLastChild(a);
 			t.addLastChild(b);
@@ -507,3 +310,214 @@ public class XParser {
 		return null;
 	}
 }
+
+/*	public Tree parseEOF(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if(next.getType()==Token.EOF){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parseEND(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if(next.getType()==Token.END){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parseSEMI(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if(next.getType()==Token.SEMICOLON){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parseBEGIN(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if(next.getType()==Token.BEGIN){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parseDOT(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if(next.getType()==Token.DOT){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parsePROGRAM(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if(next.getType()==Token.PROGRAM){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parseLBR(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if(next.getType()==Token.LBR){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parseRBR(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if(next.getType()==Token.RBR){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parseASS(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if(next.getType()==Token.ASSIGN){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parsePlus(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if(next.getType()==Token.PLUS){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parseMinus(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if(next.getType()==Token.MINUS){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parseMult(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if(next.getType()==Token.MULT){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parseDiv(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if(next.getType()==Token.DIV){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parseID(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if(next.getType()==Token.ID){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parseIF(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if( next.getType() == Token.IF){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parseTHEN(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if( next.getType() == Token.THEN){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parseELSE(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if( next.getType() == Token.ELSE){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parseLESS(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if( next.getType() == Token.LESS){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parseEQUAL(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if( next.getType() == Token.EQUALS){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parseMORE(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if( next.getType() == Token.MORE){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+
+public Tree parseIntNumber(){
+int pos = in.getPosition();
+Token next = in.nextToken();
+if(next.getType()==Token.INTCONST){
+	return new Tree(next);
+}
+in.setPosition(pos);
+return null;
+}
+*/

@@ -1,8 +1,8 @@
 /* **********************************************
- * Duale Hochschule Baden-Württemberg Karlsruhe
- * Prof. Dr. Jörn Eisenbiegler
+ * Duale Hochschule Baden-Wï¿½rttemberg Karlsruhe
+ * Prof. Dr. Jï¿½rn Eisenbiegler
  * 
- * Vorlesung Übersetzerbau
+ * Vorlesung ï¿½bersetzerbau
  * Praxis X Abstiegsparser
  * - Syntaxbaum
  * 
@@ -83,16 +83,16 @@ public class Tree {
 		StringBuffer res = new StringBuffer(); 
 		if (children.isEmpty()) {
 			res.append(token.getText());
-			System.out.println("empty: "+res.toString());
+			//System.out.println("empty: "+res.toString());
 		} else {
 			res.append("("+this.token.getText());
 			for (Tree c: children) {
 				res.append(" "+c.toString());
-				System.out.println("append: "+res.toString());
+				//System.out.println("append: "+res.toString());
 			}
 			res.append(")");
 		}
-		System.out.println(res.toString());
+		//System.out.println(res.toString());
 		return res.toString();
 		
 	}

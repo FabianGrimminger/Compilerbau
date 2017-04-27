@@ -88,7 +88,7 @@ public class XParserMain {
 	public static void main(String[] args) throws Exception {
 		
 		//TODO Initialize scanner and parser
-		JFlexXScanner scanner = new JFlexXScanner(new StringReader(testa));
+		JFlexXScanner scanner = new JFlexXScanner(new StringReader(TESTXmin1));
 		XParser parser = new XParser(new TokenReader(scanner));
 		//TODO Call parser
 		Tree mtree = parser.parseProgram();
