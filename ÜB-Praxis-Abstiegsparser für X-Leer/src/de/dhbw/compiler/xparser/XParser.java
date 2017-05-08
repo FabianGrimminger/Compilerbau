@@ -78,10 +78,10 @@ public class XParser {
 		in.setPosition(pos);
 		
 		if( (a=parseToken(Token.MINUS))!=null && (b=parseToken(Token.INTCONST))!=null){
-			Tree t = new Tree(new Token(Token.EXPR3));
-			t.addLastChild(a);
-			t.addLastChild(b);
-			return t;
+			//Tree t = new Tree(new Token(Token.EXPR3));
+			//t.addLastChild(a);
+			a.addLastChild(b);
+			return a;
 		}
 		in.setPosition(pos);
 		
@@ -93,10 +93,10 @@ public class XParser {
 		in.setPosition(pos);
 		
 		if( (a=parseToken(Token.MINUS))!=null && (b=parseToken(Token.FLOATCONST))!=null){
-			Tree t = new Tree(new Token(Token.EXPR3));
-			t.addLastChild(a);
-			t.addLastChild(b);
-			return t;
+			//Tree t = new Tree(new Token(Token.EXPR3));
+			//t.addLastChild(a);
+			a.addLastChild(b);
+			return a;
 		}
 		in.setPosition(pos);
 		
