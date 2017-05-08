@@ -52,6 +52,25 @@ public class Tree {
 		return children;
 	}
 	
+	public Tree getLeftChild(){
+		if(this.children.size()>0){
+			return this.children.get(0).getLeftChild();
+		}else{
+			return this;
+		}
+	}
+	
+	public Tree setLeftChild(Tree t){
+		if(this.children.size()>0){
+			Tree temp = this.children.get(0).setLeftChild(t);	
+			this.children.removeFirst();
+			this.children.addFirst(temp);
+			return this;
+		}else{
+			return t;
+		}
+	}
+	
 	public String toGraphvizDot() {
 		StringBuffer dot = new StringBuffer();
 		dot.append("digraph{ \n");
