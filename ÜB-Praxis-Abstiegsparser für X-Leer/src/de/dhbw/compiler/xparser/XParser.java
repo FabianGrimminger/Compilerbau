@@ -163,11 +163,11 @@ public class XParser {
 		Tree c = null;		
 		
 		if( (a=parseNumExp2())!=null && (b=parseToken(Token.PLUS))!=null && (c=parseNumExp())!=null){
-			Tree t = new Tree(new Token(Token.EXPR));
-			t.addLastChild(a);
-			t.addLastChild(b);
-			t.addLastChild(c);
-			return t;
+			//Tree t = new Tree(new Token(Token.EXPR));
+			//t.addLastChild(a);
+			b.addLastChild(a);
+			b.addLastChild(c);
+			return b;
 		}
 		in.setPosition(pos);		
 		if( (a=parseNumExp2())!=null && (b=parseToken(Token.MINUS))!=null && (c=parseNumExp())!=null){
