@@ -61,7 +61,10 @@ public class Tree {
 	}
 	
 	public Tree setLeftChild(Tree t){
-		if(this.children.size()>0){
+		if(this.children.size()==1 && this.token.getType()==Token.MINUS){
+			return t;
+		}		
+		if(this.children.size()>1){
 			Tree temp = this.children.get(0).setLeftChild(t);	
 			this.children.removeFirst();
 			this.children.addFirst(temp);
