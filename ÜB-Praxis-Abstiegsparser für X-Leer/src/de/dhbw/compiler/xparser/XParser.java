@@ -306,7 +306,7 @@ public class XParser {
 			//Tree t = new Tree(new Token(Token.CONDSTAT));
 			//t.addLastChild(a);
 			a.addLastChild(b);
-			a.addLastChild(c);
+			//a.addLastChild(c);
 			a.addLastChild(d);
 			
 			int tpos = in.getPosition();
