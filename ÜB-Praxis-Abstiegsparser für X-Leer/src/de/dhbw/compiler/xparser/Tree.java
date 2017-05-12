@@ -53,6 +53,9 @@ public class Tree {
 	}
 	
 	public Tree getLeftChild(){
+		if(this.children.size()==1 && this.token.getType()==Token.MINUS){
+			return this;
+		}	
 		if(this.children.size()>0){
 			return this.children.get(0).getLeftChild();
 		}else{

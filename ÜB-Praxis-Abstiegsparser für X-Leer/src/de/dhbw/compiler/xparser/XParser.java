@@ -311,7 +311,7 @@ public class XParser {
 			
 			int tpos = in.getPosition();
 			if((e=parseToken(Token.ELSE))!=null && (f=parseStat())!=null){
-				a.addLastChild(e);
+				//a.addLastChild(e);
 				a.addLastChild(f);
 				return a;
 			}
