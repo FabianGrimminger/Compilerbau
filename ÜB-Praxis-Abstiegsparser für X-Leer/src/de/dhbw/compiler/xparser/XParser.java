@@ -371,17 +371,17 @@ public class XParser {
 				&& (d = parseToken(Token.SEMICOLON)) != null && (e = parseCond()) != null
 				&& (f = parseToken(Token.SEMICOLON)) != null && (g = parseNumAss()) != null
 				&& (h = parseToken(Token.RBR)) != null && (i = parseStat()) != null) {
-			Tree t = new Tree(new Token(Token.FORSTAT));
-			t.addLastChild(a);
-			t.addLastChild(b);
-			t.addLastChild(c);
-			t.addLastChild(d);
-			t.addLastChild(e);
-			t.addLastChild(f);
-			t.addLastChild(g);
-			t.addLastChild(h);
-			t.addLastChild(i);
-			return t;
+			//Tree t = new Tree(new Token(Token.FORSTAT));
+			//t.addLastChild(a);
+			//t.addLastChild(b);
+			a.addLastChild(c);
+			//t.addLastChild(d);
+			a.addLastChild(e);
+			//t.addLastChild(f);
+			a.addLastChild(g);
+			//t.addLastChild(h);
+			a.addLastChild(i);
+			return a;
 		}
 		in.setPosition(pos);
 		return null;
