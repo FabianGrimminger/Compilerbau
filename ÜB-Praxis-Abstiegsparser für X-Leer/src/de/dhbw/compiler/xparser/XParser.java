@@ -344,10 +344,10 @@ public class XParser {
 		if ((a = parseToken(Token.WHILE)) != null && (b = parseToken(Token.LBR)) != null && (c = parseCond()) != null
 				&& (d = parseToken(Token.RBR)) != null && (e = parseStat()) != null) {
 			//Tree t = new Tree(new Token(Token.WHILESTAT));
-			a.addLastChild(a);
-			//a.addLastChild(b);
+			//t.addLastChild(a);
+			//t.addLastChild(b);
 			a.addLastChild(c);
-			//a.addLastChild(d);
+			//t.addLastChild(d);
 			a.addLastChild(e);
 			return a;
 		}
