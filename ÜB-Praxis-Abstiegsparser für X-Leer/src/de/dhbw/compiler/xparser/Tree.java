@@ -52,23 +52,34 @@ public class Tree {
 		return children;
 	}
 	
-	public Tree getLeftChild(){
-		if(this.children.size()==1 && this.token.getType()==Token.MINUS){
+	public Tree getLeftChild(int type){
+		if((this.children.size()==1 && this.token.getType()==Token.MINUS) || 
+				(this.token.getType()==Token.MULT && type == Token.PLUS) ||
+				(this.token.getType()==Token.MULT && type == Token.MINUS) ||
+				(this.token.getType()==Token.DIV && type == Token.PLUS) ||
+				(this.token.getType()==Token.DIV && type == Token.MINUS)){
 			return this;
-		}	
+		}
+		if(this.token.getType() == Token.LBR){
+			return this.getChild(0);
+		}
 		if(this.children.size()>0){
-			return this.children.get(0).getLeftChild();
+			return this.children.get(0).getLeftChild(this.token.getType());
 		}else{
 			return this;
 		}
 	}
 	
-	public Tree setLeftChild(Tree t){
-		if(this.children.size()==1 && this.token.getType()==Token.MINUS){
+	public Tree setLeftChild(Tree t,int type){
+		if((this.children.size()==1 && this.token.getType()==Token.MINUS) || this.token.getType() == Token.LBR ||
+				(this.token.getType()==Token.MULT && type == Token.PLUS) ||
+				(this.token.getType()==Token.MULT && type == Token.MINUS) ||
+				(this.token.getType()==Token.DIV && type == Token.PLUS) ||
+				(this.token.getType()==Token.DIV && type == Token.MINUS)){	
 			return t;
 		}		
 		if(this.children.size()>1){
-			Tree temp = this.children.get(0).setLeftChild(t);	
+			Tree temp = this.children.get(0).setLeftChild(t,this.token.getType());	
 			this.children.removeFirst();
 			this.children.addFirst(temp);
 			return this;

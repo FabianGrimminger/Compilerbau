@@ -69,11 +69,13 @@ public class XParser {
 		Tree c = null;		
 		
 		if( (a=parseToken(Token.LBR))!=null && (b=parseNumExp())!=null && (c=parseToken(Token.RBR))!=null){
-			Tree t = new Tree(new Token(Token.EXPR3));
+			//Tree t = new Tree(new Token(Token.EXPR3));
 			//t.addLastChild(a);
-			t.addLastChild(b);
+			//t.addLastChild(b);
 			//t.addLastChild(c);
-			return t;
+			a.addLastChild(b);
+			//a.addLastChild(c);
+			return a;
 		}
 		in.setPosition(pos);
 		
@@ -133,10 +135,10 @@ public class XParser {
 			//Tree t = new Tree(new Token(Token.EXPR2));
 			//t.addLastChild(b);
 			//b.addLastChild(c);
-			Tree temp = c.getLeftChild();
+			Tree temp = c.getLeftChild(b.getToken().getType());
 			b.addLastChild(a);
 			b.addLastChild(temp);
-			c = c.setLeftChild(b);
+			c = c.setLeftChild(b,b.getToken().getType());
 			return c;			
 		}
 		in.setPosition(pos);
@@ -147,10 +149,10 @@ public class XParser {
 			//t.addLastChild(b);
 			//b.addLastChild(c);
 			//return b;
-			Tree temp = c.getLeftChild();
+			Tree temp = c.getLeftChild(b.getToken().getType());
 			b.addLastChild(a);
 			b.addLastChild(temp);
-			c = c.setLeftChild(b);
+			c = c.setLeftChild(b,b.getToken().getType());
 			return c;	
 		}		
 		in.setPosition(pos);
@@ -175,10 +177,10 @@ public class XParser {
 			//t.addLastChild(a);
 			//b.addLastChild(a);
 			//b.addLastChild(c);
-			Tree temp = c.getLeftChild();
+			Tree temp = c.getLeftChild(b.getToken().getType());
 			b.addLastChild(a);
 			b.addLastChild(temp);
-			c = c.setLeftChild(b);
+			c = c.setLeftChild(b,b.getToken().getType());
 			return c;
 		}
 		in.setPosition(pos);		
@@ -187,10 +189,10 @@ public class XParser {
 			//b.addLastChild(a);
 			//t.addLastChild(b);
 			//b.addLastChild(c);
-			Tree temp = c.getLeftChild();
+			Tree temp = c.getLeftChild(b.getToken().getType());
 			b.addLastChild(a);
 			b.addLastChild(temp);
-			c = c.setLeftChild(b);
+			c = c.setLeftChild(b,b.getToken().getType());
 			return c;
 		}
 		in.setPosition(pos);
@@ -530,6 +532,13 @@ public class XParser {
 				t.addLastChild(c);
 				//t.addLastChild(d);
 				t.addLastChild(e);
+				
+				//if(b.getChild(0)!=null){
+				//	t.addLastChild(b.getChild(0));
+				//}
+				//if(b.getChild(1)!=null){
+				//	t.addLastChild(b.getChild(1));
+				//}
 				//t.addLastChild(f);
 				return t;
 			}
