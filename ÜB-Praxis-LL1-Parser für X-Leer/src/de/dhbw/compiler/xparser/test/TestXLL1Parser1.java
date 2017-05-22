@@ -1,9 +1,9 @@
 /* **********************************************
- * Duale Hochschule Baden-Württemberg Karlsruhe
- * Prof. Dr. Jörn Eisenbiegler
+ * Duale Hochschule Baden-Wï¿½rttemberg Karlsruhe
+ * Prof. Dr. Jï¿½rn Eisenbiegler
  * 
- * Vorlesung Übersetzerbau
- * Praxis LL(1)-Parser für X
+ * Vorlesung ï¿½bersetzerbau
+ * Praxis LL(1)-Parser fï¿½r X
  * - Testklasse Token
  * 
  * **********************************************

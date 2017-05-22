@@ -1,9 +1,9 @@
 /* **********************************************
- * Duale Hochschule Baden-Württemberg Karlsruhe
- * Prof. Dr. Jörn Eisenbiegler
+ * Duale Hochschule Baden-Wï¿½rttemberg Karlsruhe
+ * Prof. Dr. Jï¿½rn Eisenbiegler
  * 
- * Vorlesung Übersetzerbau
- * Praxis LL(1)-Parser für X
+ * Vorlesung ï¿½bersetzerbau
+ * Praxis LL(1)-Parser fï¿½r X
  * - Syntaxbaum
  * 
  * **********************************************
@@ -50,6 +50,42 @@ public class Tree {
 	
 	public List<Tree> getChildren() {
 		return children;
+	}
+	
+	public Tree getLeftChild(int type){
+		if((this.children.size()==1 && this.token.getType()==Token.MINUS) || 
+				(this.token.getType()==Token.MULT && type == Token.PLUS) ||
+				(this.token.getType()==Token.MULT && type == Token.MINUS) ||
+				(this.token.getType()==Token.DIV && type == Token.PLUS) ||
+				(this.token.getType()==Token.DIV && type == Token.MINUS)){
+			return this;
+		}
+		if(this.token.getType() == Token.LBR){
+			return this.getChild(0);
+		}
+		if(this.children.size()>0){
+			return this.children.get(0).getLeftChild(this.token.getType());
+		}else{
+			return this;
+		}
+	}
+	
+	public Tree setLeftChild(Tree t,int type){
+		if((this.children.size()==1 && this.token.getType()==Token.MINUS) || this.token.getType() == Token.LBR ||
+				(this.token.getType()==Token.MULT && type == Token.PLUS) ||
+				(this.token.getType()==Token.MULT && type == Token.MINUS) ||
+				(this.token.getType()==Token.DIV && type == Token.PLUS) ||
+				(this.token.getType()==Token.DIV && type == Token.MINUS)){	
+			return t;
+		}		
+		if(this.children.size()>1){
+			Tree temp = this.children.get(0).setLeftChild(t,this.token.getType());	
+			this.children.removeFirst();
+			this.children.addFirst(temp);
+			return this;
+		}else{
+			return t;
+		}
 	}
 	
 	public String toGraphvizDot() {
