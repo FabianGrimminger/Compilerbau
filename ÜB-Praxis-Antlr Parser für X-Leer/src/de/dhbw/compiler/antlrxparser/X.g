@@ -14,6 +14,7 @@ grammar X;
 options {
   language = Java;
   output = AST;
+  backtrack = false;
 }
 
 // AST-Tokens
@@ -28,29 +29,6 @@ tokens {
 @lexer::header  {package de.dhbw.compiler.antlrxparser;}
 
 WS: ( '\t' | ' ' | '\r' | '\n' )+ { skip(); };
-//PROGRAM: 'program';
-//READ: 'read';
-//PRINT: 'print';
-//INT: 'int';
-//FLOAT: 'float';
-//STRING: 'string';
-//BEGIN: 'begin';
-//END: 'end';
-//SEMICOLON: ';';
-//WHILE: 'while';
-//IF: 'if';
-//THEN: 'then';
-//ELSE: 'else';
-//FOR: 'for';
-//LBR: '(';
-//RBR: '(';
-//ASSIGN: ':=';
-//PLUS: '+';
-//MINUS: '-';
-//MULT: '*';
-//DIV: '/';
-//EQUAL
-
 fragment LETTER: ('a'..'z'|'A'..'Z'|'ä'|'Ä'|'ö'|'Ö'|'ü'|'Ü'|'ß');
 fragment DIGIT: ('0'..'9');
 ID: LETTER(LETTER|DIGIT)*;
@@ -60,15 +38,13 @@ FLOATCONST: (INTCONST ('.' DIGIT*)? ('e'|'E')('+' |'-' )? INTCONST) =>
  INTCONST ('.' DIGIT*)?;
 STRINGCONST: '"'(LETTER|DIGIT)*'"';
 
-
-
 INVALID:  .;
 
-program: 'program'ID';'declist BLOCK'.';
+program: 'program'ID';'declist block'.';
 
 decl: modifier ID ':' type ';';
 declist: decl*;
-modifier: 'read print'|'read'|'print'|{skip();};
+modifier: 'read print'|'read'|'print'|{};
 type: 'int' | 'float'|'string';
 block: 'begin' statlist 'end';
 statlist: statwithsemi*;
@@ -77,7 +53,17 @@ stat: assignstat|condstat|whilestat|forstat|block;
 whilestat: 'while''('cond')'stat;
 forstat: 'for''('assignstat';'cond';'assignstat')';
 assignstat: ID':='expr';';
-condstat: 'if' cond 'then' stat 'else' stat; | 'if' cond 'then' stat;
+condstat: 'if' cond 'then' stat condstat2;
+condstat2: 'else' stat | {};
+expr: expr2 expr1a;
+expr1a: '+'expr | '-'expr|{};
+expr2: expr3 expr2a;
+expr2a: '*'expr2 | '/'expr2 | {};
+expr3: '-'expr3a | INTCONST | FLOATCONST | STRINGCONST | ID | '(' expr ')';
+expr3a: INTCONST | FLOATCONST;
+cond: expr cond2;
+cond2: '<' expr | '>' expr | '=' expr;
+
 
 
 
