@@ -14,7 +14,7 @@ grammar X;
 options {
   language = Java;
   output = AST;
-  backtrack = false;
+  backtrack = true;
 }
 
 // AST-Tokens
@@ -29,40 +29,37 @@ tokens {
 @lexer::header  {package de.dhbw.compiler.antlrxparser;}
 
 WS: ( '\t' | ' ' | '\r' | '\n' )+ { skip(); };
-fragment LETTER: ('a'..'z'|'A'..'Z'|'ä'|'Ä'|'ö'|'Ö'|'ü'|'Ü'|'ß');
+fragment LETTER: ('a'..'z'|'A'..'Z');//'ä'|'Ä'|'ö'|'Ö'|'ü'|'Ü'|'ß');
 fragment DIGIT: ('0'..'9');
 ID: LETTER(LETTER|DIGIT)*;
-INTCONST: '-'?DIGIT+;
+INTCONST: DIGIT+;
 FLOATCONST: (INTCONST ('.' DIGIT*)? ('e'|'E')('+' |'-' )? INTCONST) =>
  INTCONST ('.' DIGIT*)? ('e'|'E')('+' |'-' )? INTCONST |
  INTCONST ('.' DIGIT*)?;
-STRINGCONST: '"'(LETTER|DIGIT)*'"';
+STRINGCONST: '"'(LETTER|DIGIT|'.'|':'|' '|'\\\"')*'"';
 
 INVALID:  .;
 
-program: 'program'ID';'declist block'.';
+program: 'program'^ID';'!declist block'.'!;
 
-decl: modifier ID ':' type ';';
-declist: decl*;
-modifier: 'read print'|'read'|'print'|{};
+decl: modifier ID ':' type ';' -> ^(DECL ID type modifier?);
+declist: decl* -> ^(DECLLIST decl*);
+modifier: 'read'? 'print'?;//|'read'|'print'| ;
 type: 'int' | 'float'|'string';
-block: 'begin' statlist 'end';
-statlist: statwithsemi*;
-statwithsemi: stat';';
+block: 'begin'! statlist^ 'end'!;
+statlist: statwithsemi* -> ^(STATLIST statwithsemi*);
+statwithsemi: stat';'!;
 stat: assignstat|condstat|whilestat|forstat|block;
-whilestat: 'while''('cond')'stat;
-forstat: 'for''('assignstat';'cond';'assignstat')';
-assignstat: ID':='expr';';
-condstat: 'if' cond 'then' stat condstat2;
-condstat2: 'else' stat | {};
-expr: expr2 expr1a;
-expr1a: '+'expr | '-'expr|{};
-expr2: expr3 expr2a;
-expr2a: '*'expr2 | '/'expr2 | {};
-expr3: '-'expr3a | INTCONST | FLOATCONST | STRINGCONST | ID | '(' expr ')';
+whilestat: 'while'^'('!cond')'!stat;
+forstat: 'for'^'('!assignstat';'!cond';'!assignstat')'! stat;
+assignstat: ID':='expr -> ^(':=' ID expr);
+condstat: 'if'^ cond 'then'! stat condstat2;
+condstat2: 'else'! stat | {};
+expr:  expr2(('+'|'-')^expr2)*;
+expr2:  expr3(('/'|'*')^expr3)*;
+expr3: '-'expr3a -> ^(UMINUS expr3a) | INTCONST | FLOATCONST | STRINGCONST | ID | '('! expr ')'!;
 expr3a: INTCONST | FLOATCONST;
-cond: expr cond2;
-cond2: '<' expr | '>' expr | '=' expr;
+cond: expr(('<'|'>'|'=')^expr);
 
 
 
