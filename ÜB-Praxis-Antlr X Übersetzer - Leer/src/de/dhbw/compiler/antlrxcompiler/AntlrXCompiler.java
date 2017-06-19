@@ -1,9 +1,9 @@
 /* **********************************************
- * Duale Hochschule Baden-Württemberg Karlsruhe
- * Prof. Dr. Jörn Eisenbiegler
+ * Duale Hochschule Baden-Wï¿½rttemberg Karlsruhe
+ * Prof. Dr. Jï¿½rn Eisenbiegler
  * 
- * Vorlesung Übersetzerbau
- * Praxis ANTLR-Parser für X
+ * Vorlesung ï¿½bersetzerbau
+ * Praxis ANTLR-Parser fï¿½r X
  * - Main-Klasse
  * 
  * **********************************************
@@ -57,9 +57,9 @@ public class AntlrXCompiler {
 	
 	private static final String TEST2 = 
 			"program test2;\n"+
+				"x: int;"+
 			"begin\n"+
-			"	x := 4-5*6*7+8/9;\n"+
-			"	y := 0*x;\n"+
+			"	x := 1+1;\n"+
 			"end.";
 
 	private static final String BEISPIELFOLIEN = 
@@ -81,13 +81,29 @@ public class AntlrXCompiler {
 		
 		XTreeAdaptor xTreeAdaptor = new XTreeAdaptor(); 
 		
-		ANTLRInputStream input = new ANTLRInputStream(new ByteArrayInputStream(TEST2.getBytes())); 
+		ANTLRInputStream input = new ANTLRInputStream(new ByteArrayInputStream(BEISPIELFOLIEN.getBytes())); 
 		XLexer lexer = new XLexer(input);
+		
 		XParser parser = new XParser(new CommonTokenStream(lexer));
 		parser.setTreeAdaptor(xTreeAdaptor);
-		CommonTree tree = parser.program().getTree();
+		XTree tree = parser.program().getTree();
+		//System.out.println(tree);
+		
+		XTypeCheck typecheck = new XTypeCheck(new CommonTreeNodeStream(xTreeAdaptor, tree));
+		typecheck.setTreeAdaptor(xTreeAdaptor);
+		XTree out = (XTree) typecheck.program().getTree();
+		
+		if(out==null){
+			System.out.println("Tree is null");
+		}else{
+			XtoJava tojava = new XtoJava(new CommonTreeNodeStream(xTreeAdaptor, tree));
+			StringTemplate temp = (StringTemplate)tojava.program().getTemplate();
+			System.out.println(temp.toString());
+		}
+		
 		
 		//TODO Weitere Stufen Aufrufen
-		
+		//XTreeGrammar treeGrammar = new XTreeAdaptor(new CommonTreeNodeStream(tree));
+		//tree = treeGrammar.program().getTree();
 	}
 }

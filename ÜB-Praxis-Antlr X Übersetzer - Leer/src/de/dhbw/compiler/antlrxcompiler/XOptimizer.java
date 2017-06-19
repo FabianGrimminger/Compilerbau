@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 /home/fabian/Compilerbau/combau/ÜB-Praxis-Antlr X Übersetzer - Leer/src/de/dhbw/compiler/antlrxcompiler/XOptimizer.g 2017-06-12 11:23:33
+// $ANTLR 3.5.2 /home/fabian/Compilerbau/combau/ÜB-Praxis-Antlr X Übersetzer - Leer/src/de/dhbw/compiler/antlrxcompiler/XOptimizer.g 2017-06-19 14:18:52
 
     package de.dhbw.compiler.antlrxcompiler;
 
@@ -20,8 +20,7 @@ public class XOptimizer extends TreeRewriter {
 		"POSDIGIT", "STATLIST", "STRINGCONST", "UMINUS", "WS", "ZERO", "'('", 
 		"')'", "'*'", "'+'", "'-'", "'.'", "'/'", "':'", "':='", "';'", "'<'", 
 		"'='", "'>'", "'begin'", "'else'", "'end'", "'float'", "'for'", "'if'", 
-		"'int'", "'print'", "'program'", "'read'", "'string'", "'then'", "'while'", 
-		"'todo'"
+		"'int'", "'print'", "'program'", "'read'", "'string'", "'then'", "'while'"
 	};
 	public static final int EOF=-1;
 	public static final int T__20=20;
@@ -66,7 +65,6 @@ public class XOptimizer extends TreeRewriter {
 	public static final int UMINUS=17;
 	public static final int WS=18;
 	public static final int ZERO=19;
-	public static final int T__46=46;
 	public static final int PLUS=23;
 
 	// delegates

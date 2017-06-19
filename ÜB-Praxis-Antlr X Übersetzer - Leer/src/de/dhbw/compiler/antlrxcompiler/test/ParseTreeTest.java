@@ -1,10 +1,10 @@
 /* **********************************************
- * Duale Hochschule Baden-Württemberg Karlsruhe
- * Prof. Dr. Jörn Eisenbiegler
+ * Duale Hochschule Baden-Wï¿½rttemberg Karlsruhe
+ * Prof. Dr. Jï¿½rn Eisenbiegler
  * 
- * Vorlesung Übersetzerbau
- * Praxis ANTLR-Parser für X
- * - Testfall-Utility für Parser
+ * Vorlesung ï¿½bersetzerbau
+ * Praxis ANTLR-Parser fï¿½r X
+ * - Testfall-Utility fï¿½r Parser
  * 
  * **********************************************
  */
@@ -23,6 +23,7 @@ import org.antlr.runtime.tree.CommonTree;
 
 import de.dhbw.compiler.antlrxcompiler.XLexer;
 import de.dhbw.compiler.antlrxcompiler.XParser;
+import de.dhbw.compiler.antlrxcompiler.XTreeAdaptor;
 
 public abstract class ParseTreeTest {
 	
@@ -31,6 +32,7 @@ public abstract class ParseTreeTest {
 		XLexer scanner = new XLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(scanner);
 		XParser			parser	= new XParser(tokens);
+		parser.setTreeAdaptor(new XTreeAdaptor());
 		ParserRuleReturnScope result = parser.program();
 		CommonTree out = (CommonTree) result.getTree();
 		
