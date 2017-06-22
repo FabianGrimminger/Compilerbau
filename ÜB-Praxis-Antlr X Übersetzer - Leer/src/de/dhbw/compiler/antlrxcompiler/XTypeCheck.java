@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 /home/fabian/Compilerbau/combau/ÜB-Praxis-Antlr X Übersetzer - Leer/src/de/dhbw/compiler/antlrxcompiler/XTypeCheck.g 2017-06-19 14:18:51
+// $ANTLR 3.5.2 /home/fabian/Compilerbau/combau/ÜB-Praxis-Antlr X Übersetzer - Leer/src/de/dhbw/compiler/antlrxcompiler/XTypeCheck.g 2017-06-22 14:04:20
 
 package de.dhbw.compiler.antlrxcompiler;
    

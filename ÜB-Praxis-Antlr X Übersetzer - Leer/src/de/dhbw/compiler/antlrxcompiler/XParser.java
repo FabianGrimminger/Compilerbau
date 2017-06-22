@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 /home/fabian/Compilerbau/combau/ÜB-Praxis-Antlr X Übersetzer - Leer/src/de/dhbw/compiler/antlrxcompiler/X.g 2017-06-19 14:18:50
+// $ANTLR 3.5.2 /home/fabian/Compilerbau/combau/ÜB-Praxis-Antlr X Übersetzer - Leer/src/de/dhbw/compiler/antlrxcompiler/X.g 2017-06-22 14:04:19
 package de.dhbw.compiler.antlrxcompiler;
 
 import org.antlr.runtime.*;

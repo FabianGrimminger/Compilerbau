@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 /home/fabian/Compilerbau/combau/ÜB-Praxis-Antlr X Übersetzer - Leer/src/de/dhbw/compiler/antlrxcompiler/XtoJava.g 2017-06-19 14:18:53
+// $ANTLR 3.5.2 /home/fabian/Compilerbau/combau/ÜB-Praxis-Antlr X Übersetzer - Leer/src/de/dhbw/compiler/antlrxcompiler/XtoJava.g 2017-06-22 13:15:57
 
     package de.dhbw.compiler.antlrxcompiler;
 
